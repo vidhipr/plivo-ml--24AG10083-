@@ -5,11 +5,10 @@
 <title>LLM Speedrun Summary</title>
 <style>
 body{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:Arial,sans-serif;
     margin:40px;
-    background:#f7f7f7;
+    background:#f4f6f8;
     color:#222;
-    line-height:1.6;
 }
 .container{
     max-width:900px;
@@ -17,7 +16,7 @@ body{
     background:white;
     padding:30px;
     border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
+    box-shadow:0 0 8px rgba(0,0,0,0.15);
 }
 h1,h2{
     color:#1f4e79;
@@ -25,17 +24,13 @@ h1,h2{
 table{
     width:100%;
     border-collapse:collapse;
-    margin-top:15px;
 }
 th,td{
     border:1px solid #ccc;
     padding:10px;
 }
 th{
-    background:#e8eef7;
-}
-ul{
-    margin-top:5px;
+    background:#e9eef5;
 }
 </style>
 </head>
@@ -47,7 +42,7 @@ ul{
 <h1>LLM Speedrun Assignment Summary</h1>
 
 <p>
-This submission improves the provided GPT baseline while satisfying the assignment constraints:
+This submission improves the provided GPT baseline while respecting all assignment constraints:
 maximum 2000 optimizer steps, fewer than 2 million parameters, CPU-only execution, and training
 only on the provided corpus.
 </p>
@@ -59,92 +54,86 @@ only on the provided corpus.
 <li>Token and positional embeddings.</li>
 <li>Pre-LayerNorm Transformer blocks.</li>
 <li>Multi-Head Causal Self-Attention using PyTorch scaled_dot_product_attention.</li>
-<li>Feed-forward network with SiLU activation.</li>
+<li>SiLU feed-forward activation.</li>
 <li>Weight tying between token embeddings and output projection.</li>
+<li>Bias-free attention projection layers.</li>
 </ul>
 
 <h2>Training Improvements</h2>
 
 <table>
+
 <tr>
 <th>Component</th>
 <th>Modification</th>
-<th>Reason</th>
+<th>Purpose</th>
 </tr>
 
 <tr>
 <td>Optimizer</td>
 <td>AdamW</td>
-<td>Better optimization and regularization.</td>
+<td>Improved optimization.</td>
 </tr>
 
 <tr>
 <td>Learning Rate</td>
-<td>Linear warmup + Cosine decay</td>
-<td>Improves convergence within 2000 steps.</td>
+<td>Linear warmup + cosine decay</td>
+<td>Better convergence within 2000 steps.</td>
 </tr>
 
 <tr>
 <td>Gradient Clipping</td>
 <td>Max norm = 1.0</td>
-<td>Stabilizes training.</td>
+<td>Stable training.</td>
 </tr>
 
 <tr>
 <td>Weight Tying</td>
 <td>Enabled</td>
-<td>Reduces redundant parameters and improves language modeling.</td>
+<td>Improved parameter efficiency.</td>
 </tr>
 
 <tr>
 <td>Activation</td>
 <td>SiLU</td>
-<td>Modern activation with good optimization characteristics.</td>
+<td>Modern feed-forward activation.</td>
 </tr>
 
 <tr>
 <td>Initialization</td>
-<td>Normal(0, 0.02)</td>
-<td>Standard GPT initialization.</td>
+<td>Normal (std = 0.02)</td>
+<td>Stable GPT-style initialization.</td>
 </tr>
 
 </table>
 
-<h2>Experiment Summary</h2>
+<h2>Experimental Process</h2>
 
 <p>
-Multiple iterations were performed by modifying one component at a time.
-Experiments included weight tying, optimizer improvements, learning-rate scheduling,
-gradient clipping, activation replacement, and increasing model capacity while
-remaining within the allowed parameter budget.
-The final checkpoint was selected based on the best development Bits Per Byte (BPB).
+Several controlled experiments were performed by modifying one component at a time, including optimizer improvements, learning-rate scheduling, weight tying, activation functions, and attention layers. The final checkpoint was selected based on the best development BPB while maintaining compatibility with the provided evaluation pipeline.
 </p>
 
 <h2>Human vs AI Contribution</h2>
 
 <table>
+
 <tr>
 <th>Task</th>
-<th>Primary Contributor</th>
+<th>Contribution</th>
 </tr>
 
 <tr>
-<td>Understanding assignment constraints</td>
+<td>Experiment planning and evaluation</td>
 <td>Human</td>
 </tr>
 
 <tr>
-<td>Selecting experiments and evaluating results</td>
-<td>Human</td>
-</tr>
-
-<tr>
-<td>Code implementation and debugging</td>
+<td>Implementation and debugging</td>
 <td>Human with AI assistance</td>
 </tr>
 
 <tr>
-<td>Documentation (RUNLOG, NOTES, SUMMARY)</td>
+<td>Documentation</td>
 <td>AI-assisted, reviewed and edited by Human</td>
 </tr>
 
@@ -158,10 +147,7 @@ The final checkpoint was selected based on the best development Bits Per Byte (B
 <h2>Final Remarks</h2>
 
 <p>
-The focus of this submission was to improve optimization efficiency and make better use of the
-available parameter budget while preserving compatibility with the provided evaluation pipeline.
-All modifications remain within the assignment constraints and maintain compatibility with
-<code>evaluate.py</code>.
+The objective was to improve optimization efficiency and parameter utilization while preserving compatibility with the supplied evaluation script. All submitted components satisfy the assignment constraints.
 </p>
 
 </div>
