@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LLM Speedrun Summary</title>
+<style>
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin:40px;
+    background:#f7f7f7;
+    color:#222;
+    line-height:1.6;
+}
+.container{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+h1,h2{
+    color:#1f4e79;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+th,td{
+    border:1px solid #ccc;
+    padding:10px;
+}
+th{
+    background:#e8eef7;
+}
+ul{
+    margin-top:5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>LLM Speedrun Assignment Summary</h1>
+
+<p>
+This submission improves the provided GPT baseline while satisfying the assignment constraints:
+maximum 2000 optimizer steps, fewer than 2 million parameters, CPU-only execution, and training
+only on the provided corpus.
+</p>
+
+<h2>Architecture</h2>
+
+<ul>
+<li>GPT-style autoregressive Transformer.</li>
+<li>Token and positional embeddings.</li>
+<li>Pre-LayerNorm Transformer blocks.</li>
+<li>Multi-Head Causal Self-Attention using PyTorch scaled_dot_product_attention.</li>
+<li>Feed-forward network with SiLU activation.</li>
+<li>Weight tying between token embeddings and output projection.</li>
+</ul>
+
+<h2>Training Improvements</h2>
+
+<table>
+<tr>
+<th>Component</th>
+<th>Modification</th>
+<th>Reason</th>
+</tr>
+
+<tr>
+<td>Optimizer</td>
+<td>AdamW</td>
+<td>Better optimization and regularization.</td>
+</tr>
+
+<tr>
+<td>Learning Rate</td>
+<td>Linear warmup + Cosine decay</td>
+<td>Improves convergence within 2000 steps.</td>
+</tr>
+
+<tr>
+<td>Gradient Clipping</td>
+<td>Max norm = 1.0</td>
+<td>Stabilizes training.</td>
+</tr>
+
+<tr>
+<td>Weight Tying</td>
+<td>Enabled</td>
+<td>Reduces redundant parameters and improves language modeling.</td>
+</tr>
+
+<tr>
+<td>Activation</td>
+<td>SiLU</td>
+<td>Modern activation with good optimization characteristics.</td>
+</tr>
+
+<tr>
+<td>Initialization</td>
+<td>Normal(0, 0.02)</td>
+<td>Standard GPT initialization.</td>
+</tr>
+
+</table>
+
+<h2>Experiment Summary</h2>
+
+<p>
+Multiple iterations were performed by modifying one component at a time.
+Experiments included weight tying, optimizer improvements, learning-rate scheduling,
+gradient clipping, activation replacement, and increasing model capacity while
+remaining within the allowed parameter budget.
+The final checkpoint was selected based on the best development Bits Per Byte (BPB).
+</p>
+
+<h2>Human vs AI Contribution</h2>
+
+<table>
+<tr>
+<th>Task</th>
+<th>Primary Contributor</th>
+</tr>
+
+<tr>
+<td>Understanding assignment constraints</td>
+<td>Human</td>
+</tr>
+
+<tr>
+<td>Selecting experiments and evaluating results</td>
+<td>Human</td>
+</tr>
+
+<tr>
+<td>Code implementation and debugging</td>
+<td>Human with AI assistance</td>
+</tr>
+
+<tr>
+<td>Documentation (RUNLOG, NOTES, SUMMARY)</td>
+<td>AI-assisted, reviewed and edited by Human</td>
+</tr>
+
+<tr>
+<td>Final model selection</td>
+<td>Human</td>
+</tr>
+
+</table>
+
+<h2>Final Remarks</h2>
+
+<p>
+The focus of this submission was to improve optimization efficiency and make better use of the
+available parameter budget while preserving compatibility with the provided evaluation pipeline.
+All modifications remain within the assignment constraints and maintain compatibility with
+<code>evaluate.py</code>.
+</p>
+
+</div>
+
+</body>
+</html>
